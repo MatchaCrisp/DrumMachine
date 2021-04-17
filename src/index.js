@@ -12,7 +12,19 @@ const App=()=>{
 const DrumMachine=()=>{
   const [data, setData]=useState({});
   const [curr, setCurr]=useState('');
+  const [url]=useState('');
+  useEffect=(()=>{
+    if (!url) return;
 
+    const fetchData=async ()=>{
+      const response=await fetch(url);
+      const data=await response.json();
+
+      setData(data);
+    }
+    fetchData().catch(console.log);
+
+  },[url]);
 
   return (
     <div id="drum-machine">
