@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 import './index.scss';
 
 const App=()=>{
@@ -31,7 +32,10 @@ const DrumMachine=()=>{
 
   return (
     <div id="drum-machine">
+
       <DrumPads handleDisplay={handleDisplay} power={power} bank={bank}/>
+      <p>{`power is ${power}`}</p>
+      <p>{`bank is ${bank?1:2}`}</p>
       <CtrlPad handlePower={powerSwitch} handleBank={bankSwitch} curr={curr}/>
     </div>
   )
@@ -40,9 +44,9 @@ const DrumMachine=()=>{
 const CtrlPad=props=>{
   return (
     <div id="ctrl-pad">
-      <Power handlePower={props.powerSwitch}/>
+      <Power handlePower={props.handlePower}/>
       <Display curr={props.curr}/>
-      <Swap handleBank={props.bankSwitch}/>
+      <Swap handleBank={props.handleBank}/>
     </div>
     
 
@@ -66,26 +70,34 @@ const Swap=props=>{
   )
 }
 const DrumPads=props=>{
-  const [data, setData]=useState({});
+  const [sound, setSound]=useState([]);
   const [url]=useState('https://raw.githubusercontent.com/MatchaCrisp/DrumMachine/main/src/data/soundBite.json');
 
-  useEffect=(()=>{
+
+  const renderPad=items=><DrumPad 
+                            key ={items.idKey}
+                            idKey={items.idKey}
+                            id={items.id}
+                            url={props.bank?items.url1:items.url2}
+                            desc={props.bank?items.desc1:items.desc2} 
+                            power={props.power} 
+                            handleDisplay={props.handleDisplay}/>;
+  useEffect(()=>{
     if (!url) return;
 
     const fetchData=async ()=>{
       const response=await fetch(url);
       const data=await response.json();
-
-      setData(data);
+      setSound(data.soundBite);
+      
     }
     fetchData().catch(console.log);
 
   },[url]);
 
+  const jsx=sound.map(items=>renderPad(items));
 
-  const renderPad=items=><DrumPad key ={items.idKey} items={items} power={props.power} bank={props.bank} handleDisplay={props.handleDisplay}/>;
 
-  const jsx=data.soundBite.map(items=>renderPad(items));
 
 
   return (
@@ -95,16 +107,38 @@ const DrumPads=props=>{
   )
 }
 const DrumPad=props=>{
-  const sound=props.items;
+  
+  useEffect(()=>{
+    document.addEventListener('keydown',handleKey);
+    return ()=>{document.removeEventListener('keydown',handleKey)};
+  });
+
+  const handleKey=e=>{
+    if (!props.power) return;
+    if (e.keyCode===props.idKey) {
+      handleEvent();
+    }
+  }
   const handleClick=()=>{
     if (!props.power) return;
-    //play sound and change display
-    props.handleDisplay(props.bank?sound.desc1:sound.desc2);
-    console.log(bank?sound.url1:sound.url2);
+    handleEvent();
   }
+  const handleEvent=()=>{
+    //play sound and change display
+    props.handleDisplay(props.desc);
+    playSound();
+    console.log(props.url);
+  }
+  const playSound=()=>{
+    const sound=document.getElementById(props.id);
+    sound.currentTime=0;
+    sound.play();
+  };
   //handle keydown event
     return (
-      <button className="drum-pad" id={sound.id} onClick={handleClick}>{props.id}</button>
+      <div className="drum-pad" id={`${props.id}butt`} onClick={handleClick}>{props.id}
+        <audio className="clip" id={props.id} src={props.url} />
+      </div>
     )
 }
 ReactDOM.render(<App/>, document.getElementById('root'));
