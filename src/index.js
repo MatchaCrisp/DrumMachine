@@ -4,20 +4,9 @@ import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 import './index.scss';
 
 const App=()=>{
-  return (
-    <div id="app">
-      <DrumMachine />
-    </div>
-  )
-}
-const DrumMachine=()=>{
-  
-  const [curr, setCurr]=useState('');
   const [power, setPower]=useState(true);
   //true = 1, false = 2
   const [bank,setBank]=useState(true);
-
-
   const powerSwitch=()=>{
     setPower(!power);
   }
@@ -25,18 +14,27 @@ const DrumMachine=()=>{
   const bankSwitch=()=>{
     setBank(!bank);
   }
-
+  return (
+    <div id="app" className={bank?'app-bank1':'app-bank2'}>
+      <DrumMachine 
+        handlePower={powerSwitch} 
+        handleBank={bankSwitch}
+        power={power}
+        bank={bank}/>
+    </div>
+  )
+}
+const DrumMachine=props=>{
+  const [curr, setCurr]=useState('');
   const handleDisplay=desc=>{
     setCurr(desc);
   }
 
   return (
     <div id="drum-machine">
-
-      <DrumPads handleDisplay={handleDisplay} power={power} bank={bank}/>
-      <p>{`power is ${power}`}</p>
-      <p>{`bank is ${bank?1:2}`}</p>
-      <CtrlPad handlePower={powerSwitch} handleBank={bankSwitch} curr={curr}/>
+      <Display curr={curr}/>
+      <DrumPads handleDisplay={handleDisplay} power={props.power} bank={props.bank}/>
+      <CtrlPad handlePower={props.handlePower} handleBank={props.handleBank}/>
     </div>
   )
 }
@@ -44,8 +42,8 @@ const DrumMachine=()=>{
 const CtrlPad=props=>{
   return (
     <div id="ctrl-pad">
+      
       <Power handlePower={props.handlePower}/>
-      <Display curr={props.curr}/>
       <Swap handleBank={props.handleBank}/>
     </div>
     
@@ -101,7 +99,7 @@ const DrumPads=props=>{
 
 
   return (
-    <div id="drum-pads">
+    <div id="drum-pads" className={props.bank?'app-pads1':'app-pads2'}>
       {jsx}
     </div>
   )
@@ -129,6 +127,11 @@ const DrumPad=props=>{
     playSound();
     console.log(props.url);
   }
+  const addClass=async()=>{
+    const ele=document.getElementById(`${props.id}butt`);
+    ele.classList.add("butt-active");
+    
+  }
   const playSound=()=>{
     const sound=document.getElementById(props.id);
     sound.currentTime=0;
@@ -136,7 +139,8 @@ const DrumPad=props=>{
   };
   //handle keydown event
     return (
-      <div className="drum-pad" id={`${props.id}butt`} onClick={handleClick}>{props.id}
+      <div className="drum-pad" id={`${props.id}butt`} onClick={handleClick}>
+        <p id="pad-id">{props.id}</p>
         <audio className="clip" id={props.id} src={props.url} />
       </div>
     )
