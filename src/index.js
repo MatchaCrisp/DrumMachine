@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { unstable_renderSubtreeIntoContainer } from 'react-dom';
+
 import './index.scss';
 
 const App=()=>{
@@ -105,7 +105,7 @@ const DrumPads=props=>{
   )
 }
 const DrumPad=props=>{
-  
+  const [act, setAct]=useState(false);
   useEffect(()=>{
     document.addEventListener('keydown',handleKey);
     return ()=>{document.removeEventListener('keydown',handleKey)};
@@ -127,19 +127,20 @@ const DrumPad=props=>{
     playSound();
     console.log(props.url);
   }
-  const addClass=async()=>{
-    const ele=document.getElementById(`${props.id}butt`);
-    ele.classList.add("butt-active");
-    
-  }
+
   const playSound=()=>{
     const sound=document.getElementById(props.id);
+    const dur=sound.duration;
     sound.currentTime=0;
+    console.log(dur);
+    setAct(!act);
     sound.play();
+    setTimeout(setAct(!act),dur);
+
   };
   //handle keydown event
     return (
-      <div className="drum-pad" id={`${props.id}butt`} onClick={handleClick}>
+      <div className={`drum-pad ${act?'butt-active':''}`} id={`${props.id}butt`} onClick={handleClick}>
         <p id="pad-id">{props.id}</p>
         <audio className="clip" id={props.id} src={props.url} />
       </div>

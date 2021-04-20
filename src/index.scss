@@ -18,7 +18,7 @@ html {
     display:flex;
     justify-content: center;
     align-items: center;
-
+    position:relative;
     height:100vh;
     width:100vw;
     #drum-machine {
@@ -51,12 +51,17 @@ html {
             flex-flow:row wrap;
             box-shadow: 0.25rem 0.25rem 0.25rem black;
             .drum-pad {
+                
+                cursor: pointer;
                 border:1px solid black;
                 display:block;
                 height:31%;
                 width:31%;
                 margin:1.1%;
                 #pad-id {
+                    user-select:none;
+                -moz-user-select:none;
+                -webkit-user-select: none;
                     font-size:4rem;
                     display:block;
                     margin-top:1.5rem;
@@ -91,12 +96,25 @@ html {
 
 .app-bank1 {
     font-family: 'Roboto', sans-serif;
-        //temp col
-        background-color:rgb(95, 95, 105);
+    background-image: url('https://wallpapercave.com/wp/wp3724179.jpg');
+    background-size: cover;
+    &:after {
+        position:absolute;
+        content:'';
+        z-index:1;
+        top:0;
+        left:0;
+        height:100%;
+        width:100%;
+        background-color:rgba(95,95,105,0.8);
+        
+    }
     #drum-machine {
+        z-index:2;
         .app-pads1 {
             //temp col
-            background-color:darkslateblue;
+            background:linear-gradient(45deg,darkslateblue,rgb(149, 139, 212));
+
         }
     }
 }
@@ -104,13 +122,30 @@ html {
 //bank 2
 .app-bank2 {
     font-family: 'Rock Salt', cursive;
-    
-    //temp col
-    background-color:rgb(107, 91, 91);
+    background-image: url('https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fGd1aXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');
+    background-size: cover;
+    &:after {
+        position:absolute;
+        content:'';
+        z-index:1;
+        top:0;
+        left:0;
+        height:100%;
+        width:100%;
+        background-color:rgba(107, 91, 91,0.8);
+        filter:blur(80%);
+    }
+
     #drum-machine {
+        z-index:2;
         .app-pads2 {
             //temp col
-            background-color:rgb(139, 61, 61);
+            background:linear-gradient(135deg,rgb(139, 61, 61),rgb(197, 141, 141));
+
         }
     }
+}
+
+.butt-active {
+    background-color:white;
 }
