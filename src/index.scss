@@ -1,6 +1,23 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
+$tru-pri-col:green;
+$tru-acc-col:gray;
+$fal-pri-col:red;
+$fal-acc-col:gray;
+
+//animation
+@keyframes activated {
+    0%{
+        background-color:white;
+        opacity:50%;
+    }
+    100% {
+        background-color:white;
+        opacity:0%;
+    }
+}
+
 //global
 
 * {
@@ -35,7 +52,7 @@ html {
             left:12.5%;
             width:75%;
             height:2rem;
-            padding-top:0.5rem;
+            line-height:2rem;
             text-align:center;
             box-shadow: 0.25rem 0.25rem 0.25rem black;
 
@@ -53,19 +70,22 @@ html {
             .drum-pad {
                 
                 cursor: pointer;
-                border:1px solid black;
                 display:block;
                 height:31%;
                 width:31%;
                 margin:1.1%;
+                
+                    text-align: center;
                 #pad-id {
                     user-select:none;
                 -moz-user-select:none;
                 -webkit-user-select: none;
-                    font-size:4rem;
+                    font-size:5rem;
+                    margin-top:1.25rem;
                     display:block;
-                    margin-top:1.5rem;
-                    text-align: center;
+                    line-height:100%;
+
+                    
                 }
             }
         }
@@ -79,14 +99,7 @@ html {
             height:6rem;
             width:75%;
             box-shadow: 0.25rem 0.25rem 0.25rem black;
-            #power {
-                display:block;
-                margin: 0 auto;
-            }
-            #swap {
-                display:block;
-                margin:1rem auto;
-            }
+
         }
         
     }
@@ -110,6 +123,7 @@ html {
         
     }
     #drum-machine {
+
         z-index:2;
         .app-pads1 {
             //temp col
@@ -121,7 +135,7 @@ html {
 
 //bank 2
 .app-bank2 {
-    font-family: 'Rock Salt', cursive;
+    font-family: 'Roboto', sans-serif;
     background-image: url('https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fGd1aXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');
     background-size: cover;
     &:after {
@@ -137,8 +151,10 @@ html {
     }
 
     #drum-machine {
+        
         z-index:2;
         .app-pads2 {
+            font-family: 'Rock Salt', cursive;
             //temp col
             background:linear-gradient(135deg,rgb(139, 61, 61),rgb(197, 141, 141));
 
@@ -146,6 +162,95 @@ html {
     }
 }
 
-.butt-active {
-    background-color:white;
-}
+//toggle button
+.tog {
+    position: relative;
+    width: 65px;
+    display: block;
+    margin:0 auto 1rem auto;
+    user-select:none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    text-align: left;
+    font-size:14px;
+    font-family:'Roboto' sans-serif;
+    &-check{
+      display:none;
+    }
+    &-label{
+      display: block;
+      overflow: hidden;
+      cursor: pointer;
+      height:30px;
+      border-radius: 15px;
+      .tog-inner{
+        display: block;
+        box-sizing:content-box;
+        width: 200%;
+        margin-left: -100%;
+        height:30px;
+        transition: margin 0.3s ease-in 0s;
+        &:before{
+          display: block;
+            float:left;
+            box-sizing:content-box;
+          width: calc(50% - 10px);
+          height: 30px;
+          line-height: 30px;
+          font-weight: bold;
+          content: attr(datacustattrt);
+            padding-left: 10px;
+          background: linear-gradient(0deg, $tru-acc-col,$tru-pri-col);
+          color: #fff;
+
+        }
+        &:after{
+          display: block;
+          box-sizing:content-box;
+          float:left;
+          width: calc(50% - 10px);
+          height: 30px;
+          line-height: 30px;
+          font-weight: bold;
+          content: attr(datacustattrf);
+            padding-right:10px;
+          background: linear-gradient(180deg, $fal-acc-col,$fal-pri-col);
+          color: #fff;
+            text-align: right;
+        }
+      }
+      .tog-switch{
+        display: block;
+        width: 26px;
+        height:26px;
+        margin: 5px;
+        background:linear-gradient(133deg, white,gray);
+        position: absolute;
+        top: -3px;
+        bottom: 0;
+        right: 33px;
+        border: 0 solid #bbb;
+        border-radius: 50%;
+        transition: all 0.3s ease-in 0s;
+        box-shadow: 0.5px 0.5px 0.5px black;
+      }
+    }
+    &:disabled{
+      background-color: #ddd;
+      cursor: not-allowed;
+      &:before{
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+    }
+    &-check:checked + &-label{
+      .tog-inner{
+        margin-left: 0;
+      }
+      .tog-switch{
+        right: -3px;
+      }
+    }
+  }
+  
