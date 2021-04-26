@@ -180,9 +180,11 @@ const DrumPad=props=>{
       <div className='drum-pad'
            id={`${props.id}butt`} 
            onClick={handleClick}
-           style={{animation:act?`activated ${act}ms`:'none'}}>
+           >
         <p id="pad-id">{props.id}</p>
         <audio className="clip" id={props.id} src={props.url} />
+        <div id="animHelper"
+             style={{animation:act?`activated ${act}ms`:'none'}} />
       </div>
     )
 }

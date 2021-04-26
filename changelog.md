@@ -33,3 +33,9 @@
 ### to do
  * refactor
  * accurate url
+
+## v1.0: Production Build
+### new
+ * webpage
+ * added correct background url/audio url
+ * fixed active pad effect (test build does not work in github)

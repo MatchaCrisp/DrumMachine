@@ -66,7 +66,7 @@ html {
             flex-flow:row wrap;
             box-shadow: 0.25rem 0.25rem 0.25rem black;
             .drum-pad {
-                
+                position:relative;
                 cursor: pointer;
                 display:block;
                 height:31%;
@@ -82,8 +82,18 @@ html {
                     margin-top:1.25rem;
                     display:block;
                     line-height:100%;
+                
 
                     
+                }
+                #animHelper {
+                  content:'';
+                  height:100%;
+                  width:100%;
+                  position:absolute;
+                  top:0;
+                  left:0;
+                  z-index:1;
                 }
             }
         }
@@ -107,7 +117,7 @@ html {
 
 .app-bank1 {
     font-family: 'Roboto', sans-serif;
-    background-image: url('https://wallpapercave.com/wp/wp3724179.jpg');
+    background-image: url('https://raw.githubusercontent.com/MatchaCrisp/DrumMachine/main/src/img/shia.jpg');
     background-size: cover;
     &:after {
         position:absolute;
@@ -134,7 +144,7 @@ html {
 //bank 2
 .app-bank2 {
     font-family: 'Roboto', sans-serif;
-    background-image: url('https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fGd1aXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');
+    background-image: url('https://raw.githubusercontent.com/MatchaCrisp/DrumMachine/main/src/img/rick.jpg');
     background-size: cover;
     &:after {
         position:absolute;
