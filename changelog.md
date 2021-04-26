@@ -42,6 +42,10 @@
 
 ## v1.1: bugfix/QoL
 ### new
- * fixed active pad effect (due to dupe id)
+ * fixed active pad effect again (due to dupe id?)
  * remove display text on power/bank toggle
  * lifted display state up to App
+
+## v1.11: bugfix
+### new
+ * fixed active pad effect again (probably finally hopefully) (due to react accepting only decimal values for opacity instead of percentages)

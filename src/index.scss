@@ -10,11 +10,11 @@ $fal-acc-col:rgba(153, 111, 111, 0.8);
 @keyframes activated {
     0%{
         background-color:white;
-        opacity:50%;
+        opacity:0.5;
     }
     100% {
         background-color:white;
-        opacity:0%;
+        opacity:0;
     }
 }
 
