@@ -39,3 +39,9 @@
  * webpage
  * added correct background url/audio url
  * fixed active pad effect (test build does not work in github)
+
+## v1.1: bugfix/QoL
+### new
+ * fixed active pad effect (due to dupe id)
+ * remove display text on power/bank toggle
+ * lifted display state up to App

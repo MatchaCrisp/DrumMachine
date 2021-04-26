@@ -8,37 +8,43 @@ const App=()=>{
   const [power, setPower]=useState(true);
   //app audio bank: true = 1, false = 2
   const [bank,setBank]=useState(true);
-
+  //display text
+  const [curr, setCurr]=useState('');
   const powerSwitch=e=>{
     setPower(e.target.checked);
+    setCurr('');
   }
 
   const bankSwitch=e=>{
     setBank(e.target.checked);
+    setCurr('');
+  }
+
+  const handleDisplay=desc=>{
+    setCurr(desc);
   }
   return (
     <div id="app" className={bank?'app-bank1':'app-bank2'}>
       <DrumMachine 
         handlePower={powerSwitch} 
         handleBank={bankSwitch}
+        handleDisplay={handleDisplay}
         power={power}
-        bank={bank}/>
+        bank={bank}
+        curr={curr}/>
     </div>
   )
 }
 
 const DrumMachine=props=>{
-  //display text
-  const [curr, setCurr]=useState('');
 
-  const handleDisplay=desc=>{
-    setCurr(desc);
-  }
+
+
 
   return (
     <div id="drum-machine">
-      <Display curr={curr}/>
-      <DrumPads handleDisplay={handleDisplay} power={props.power} bank={props.bank}/>
+      <Display curr={props.curr}/>
+      <DrumPads handleDisplay={props.handleDisplay} power={props.power} bank={props.bank}/>
       <CtrlPad handlePower={props.handlePower} handleBank={props.handleBank} power={props.power} bank={props.bank}/>
     </div>
   )
@@ -181,9 +187,9 @@ const DrumPad=props=>{
            id={`${props.id}butt`} 
            onClick={handleClick}
            >
-        <p id="pad-id">{props.id}</p>
+        <p className="pad-id">{props.id}</p>
         <audio className="clip" id={props.id} src={props.url} />
-        <div id="animHelper"
+        <div className="animHelper"
              style={{animation:act?`activated ${act}ms`:'none'}} />
       </div>
     )
