@@ -1,12 +1,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
-$tru-pri-col:green;
-$tru-acc-col:gray;
-$fal-pri-col:red;
-$fal-acc-col:gray;
+$tru-pri-col:rgb(95,95,105);
+$tru-acc-col:rgba(117, 117, 145, 0.8);
+$fal-pri-col:rgb(107, 91, 91);
+$fal-acc-col:rgba(153, 111, 111, 0.8);
 
-//animation
+//animation for active drumpad
 @keyframes activated {
     0%{
         background-color:white;
@@ -41,8 +41,6 @@ html {
     #drum-machine {
         height:36rem;
         width:28rem;
-        //temp col
-
         position:relative;
         #display {
             background-color:gainsboro;
@@ -215,7 +213,7 @@ html {
           font-weight: bold;
           content: attr(datacustattrf);
             padding-right:10px;
-          background: linear-gradient(180deg, $fal-acc-col,$fal-pri-col);
+          background: linear-gradient(0deg, $fal-acc-col,$fal-pri-col);
           color: #fff;
             text-align: right;
         }

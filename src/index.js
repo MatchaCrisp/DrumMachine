@@ -4,9 +4,11 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 
 const App=()=>{
+  //app on/off
   const [power, setPower]=useState(true);
-  //true = 1, false = 2
+  //app audio bank: true = 1, false = 2
   const [bank,setBank]=useState(true);
+
   const powerSwitch=e=>{
     setPower(e.target.checked);
   }
@@ -24,8 +26,11 @@ const App=()=>{
     </div>
   )
 }
+
 const DrumMachine=props=>{
+  //display text
   const [curr, setCurr]=useState('');
+
   const handleDisplay=desc=>{
     setCurr(desc);
   }
@@ -34,7 +39,7 @@ const DrumMachine=props=>{
     <div id="drum-machine">
       <Display curr={curr}/>
       <DrumPads handleDisplay={handleDisplay} power={props.power} bank={props.bank}/>
-      <CtrlPad handlePower={props.handlePower} handleBank={props.handleBank}/>
+      <CtrlPad handlePower={props.handlePower} handleBank={props.handleBank} power={props.power} bank={props.bank}/>
     </div>
   )
 }
@@ -45,11 +50,13 @@ const CtrlPad=props=>{
       <ToggleSwitch name="powerTog"
                     id="powerSwit"
                     handleChange={props.handlePower}
+                    checky={props.power}
                     tTxt='ON'
                     fTxt='OFF' />
       <ToggleSwitch name="bankTog"
                     id="bankSwit"
                     handleChange={props.handleBank}
+                    checky={props.bank}
                     tTxt='&nbsp;&nbsp;1'
                     fTxt='2&nbsp;&nbsp;&nbsp;' />              
     </div>
@@ -66,6 +73,7 @@ const ToggleSwitch =props=>{
       name={props.name}
       id={props.id}
       disabled={props.dis}
+      defaultChecked={props.checky}
       onChange={props.handleChange}
     />
     <label
@@ -89,6 +97,7 @@ const Display=props=>{
 }
 
 const DrumPads=props=>{
+  //array of audio url and their descriptions
   const [sound, setSound]=useState([]);
   const [url]=useState('https://raw.githubusercontent.com/MatchaCrisp/DrumMachine/main/src/data/soundBite.json');
 
@@ -101,6 +110,8 @@ const DrumPads=props=>{
                             desc={props.bank?items.desc1:items.desc2} 
                             power={props.power} 
                             handleDisplay={props.handleDisplay}/>;
+  
+  //retrieve data on mount                          
   useEffect(()=>{
     if (!url) return;
 
@@ -125,8 +136,12 @@ const DrumPads=props=>{
     </div>
   )
 }
+
 const DrumPad=props=>{
+  //active state: 0=inactive, any int=duration of clip in ms
   const [act, setAct]=useState(0);
+
+  //add keydown listener on mount, remove on unmount
   useEffect(()=>{
     document.addEventListener('keydown',handleKey);
     return ()=>{document.removeEventListener('keydown',handleKey)};
@@ -146,23 +161,21 @@ const DrumPad=props=>{
     //play sound and change display
     props.handleDisplay(props.desc);
     playSound();
-    console.log(props.url);
   }
 
+  //active effect achieved through async settimeout
   const playSound=async()=>{
     const sound=document.getElementById(props.id);
     const dur=Math.round(sound.duration*1000);
-
     sound.currentTime=0;
     setAct(dur);
-
     sound.play();
     await new Promise(resolve=>setTimeout(resolve,dur));
     setAct(0);
 
 
   };
-  //handle keydown event
+
     return (
       <div className='drum-pad'
            id={`${props.id}butt`} 
