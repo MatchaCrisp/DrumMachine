@@ -24,3 +24,12 @@
  * Source guitar note (X3), guitar chord (X3), and 3 other clips for audio bank 2
  * Change display text to reflect audio accurately
  * Refactor/bugfix
+
+## v0.9: Resources
+### new
+  * source audio clips
+  * change display text
+
+### to do
+ * refactor
+ * accurate url
