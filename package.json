@@ -1,16 +1,15 @@
 {
-  "homepage":"http://MatchaCrisp.github.io/DrumMachine",
+  "author": "Junyan Ye",
+  "homepage": "http://MatchaCrisp.github.io/DrumMachine",
   "name": "drum-machine",
-  "version": "0.1.0",
+  "description": "Webpage that plays soundbites on button press",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^12.8.3",
-    "node-sass": "^5.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "sass": "^1.51.0",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -18,8 +17,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy":"npm run build",
-    "deploy":"gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
